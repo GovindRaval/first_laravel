@@ -97,6 +97,19 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['can:' . config('custom_m
         Route::get('/change-password', ['middleware' => ['can:' . config('custom_middleware.edit_profile')], 'uses' => $controller . 'changePassword'])->name('change-password'); // Edit
         Route::post('/update-password', ['middleware' => ['can:' . config('custom_middleware.edit_profile')], 'uses' => $controller . 'updatePassword'])->name('update-password'); // Update
     });
+    //Video
+    Route::group(['namespace' => 'Video', 'prefix' => 'video', 'as' => 'video.', 'middleware' => ['can:' . config('custom_middleware.view_video')]], function ()
+    {
+        $default    = "index";
+        $controller = "VideoController@";
+        Route::get('/', ['middleware' => ['can:' . config('custom_middleware.view_video')], 'uses' => $controller . 'index'])->name('index'); //Profile
+        Route::get('/add', ['middleware' => ['can:' . config('custom_middleware.create_video')], 'uses' => $controller . 'create'])->name('add'); //Add Form
+        Route::post('/add', ['middleware' => ['can:' . config('custom_middleware.create_video')], 'uses' => $controller . 'store'])->name('store'); //Add Form
+        //Edit Profile
+        // Route::post('/updtate-profile', ['middleware' => ['can:' . config('custom_middleware.edit_profile')], 'uses' => $controller . 'updateProfile'])->name('update-profile'); //Update Profile
+        // Route::get('/change-password', ['middleware' => ['can:' . config('custom_middleware.edit_profile')], 'uses' => $controller . 'changePassword'])->name('change-password'); // Edit
+        // Route::post('/update-password', ['middleware' => ['can:' . config('custom_middleware.edit_profile')], 'uses' => $controller . 'updatePassword'])->name('update-password'); // Update
+    });
 
     if (false)
     {

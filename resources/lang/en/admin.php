@@ -117,6 +117,7 @@ return [
     'menu_general_setting'                   => 'General Setting',
     'menu_city'                              => 'City',
     'menu_master'                            => 'Master',
+    'menu_video'                             => 'Video',
     /*
      * NavBar
      */
@@ -271,6 +272,9 @@ return [
      * Country
      */
     'country'                                => 'Country',
+    'video'                                  => 'Video',
+    'video-name'                             => 'Video Name',
+    'video-url'                              => 'Video Url',
     /*
      * City
      */
@@ -285,4 +289,8 @@ return [
     'error-settings-file-mimes'              => 'Please upload either #mimes#',
     'error-settings-dimention'               => '#field# dimensions must be : #width#x#height# pixels',
     'error-settings-url'                     => '#field# must be valid URL',
+    
+    'error-video-req-name'                     => 'Please Enter video name',
+
+
 ];

@@ -39,6 +39,7 @@ class MenuLevelSeeder extends Seeder
                     '1:Countries',
                     '2:City',
                 ],
+                '9:Video'          => [],
                 '8:General Setting' => [
                     '3:Settings',
                 ],

@@ -95,6 +95,17 @@
                     </ul>
                 </li>
                 <?php endif; ?>
+                <!--Video-->
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check(config('custom_middleware.view_video'))): ?>
+                <li class="nav-item">
+                    <a href="<?php echo e(route('admin.video.index')); ?>" class="nav-link <?php echo e(request()->routeIs('admin.video.index') ?'active':''); ?>">
+                        <i class="nav-icon fas fa-camera"></i>
+                        <p><?php echo e(__('admin.menu_video')); ?></p>
+                    </a>
+
+                </li>
+                <?php endif; ?>
+                <!--/.Video-->
                 <!--/.Master-->
                 <!--Setting-->
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check(config('custom_middleware.view_general_setting'))): ?>
@@ -125,4 +136,5 @@
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
-</aside><?php /**PATH C:\xampp\htdocs\first_laravel\resources\views/layout/sidebar.blade.php ENDPATH**/ ?>
+</aside>
+<?php /**PATH C:\xampp\htdocs\first_laravel\resources\views/layout/sidebar.blade.php ENDPATH**/ ?>

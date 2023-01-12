@@ -95,6 +95,17 @@
                     </ul>
                 </li>
                 @endcan
+                <!--Video-->
+                @can(config('custom_middleware.view_video'))
+                <li class="nav-item">
+                    <a href="{{route('admin.video.index')}}" class="nav-link {{ request()->routeIs('admin.video.index') ?'active':'' }}">
+                        <i class="nav-icon fas fa-camera"></i>
+                        <p>{{__('admin.menu_video')}}</p>
+                    </a>
+
+                </li>
+                @endcan
+                <!--/.Video-->
                 <!--/.Master-->
                 <!--Setting-->
                 @can(config('custom_middleware.view_general_setting'))
