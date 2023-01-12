@@ -21,6 +21,7 @@ class AdminCountry extends Model
         static::creating(function ($data)
         {
             $data->created_by = auth()->user()->id;
+         
         });
 
         static::updating(function ($data)
@@ -53,11 +54,6 @@ class AdminCountry extends Model
              */
             case 'country_name':
                 $record = $this->sortByTitle($sortKey, $sortVal);
-                $record = implode(",", $record);
-                $query  = $this->orderByRaw("FIELD(id, $record)");
-                break;
-            case 'delivery_time':
-                $record = $this->sortByDelivery($sortKey, $sortVal);
                 $record = implode(",", $record);
                 $query  = $this->orderByRaw("FIELD(id, $record)");
                 break;
@@ -116,10 +112,10 @@ class AdminCountry extends Model
         return AdminCountryDescription::orderBy('country_name', $sortVal)->pluck('country_id')->toArray();
     }
 
-    public function sortByDelivery($sortKey, $sortVal)
-    {
-        return AdminCountryDescription::orderBy('delivery_time', $sortVal)->pluck('country_id')->toArray();
-    }
+    // public function sortByDelivery($sortKey, $sortVal)
+    // {
+    //     return AdminCountryDescription::orderBy('delivery_time', $sortVal)->pluck('country_id')->toArray();
+    // }
 
     /*
      * search By Title
@@ -130,10 +126,10 @@ class AdminCountry extends Model
         return AdminCountryDescription::where('country_name', 'LIKE', '%' . $searchText . '%')->pluck('country_id');
     }
 
-    public function searchbByDelivery($searchText)
-    {
-        return AdminCountryDescription::where('delivery_time', 'LIKE', '%' . $searchText . '%')->pluck('country_id');
-    }
+    // public function searchbByDelivery($searchText)
+    // {
+    //     return AdminCountryDescription::where('delivery_time', 'LIKE', '%' . $searchText . '%')->pluck('country_id');
+    // }
 
     public function getCountryDescription($languageId = "1", $getAll = false)
     {

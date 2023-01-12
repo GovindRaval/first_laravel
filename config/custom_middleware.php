@@ -101,5 +101,12 @@ return [
     'create_general_setting_setting'     => 'Create_2_8_3',
     'edit_general_setting_setting'       => 'Edit_2_8_3',
     'delete_general_setting_setting'     => 'Delete_2_8_3',
+     /*
+     * Videos
+     */
+    'view_video'                       => 'View_2_9',
+    'create_video'                     => 'Create_2_9',
+    'edit_video'                       => 'Edit_2_9',
+    'delete_video'                     => 'Delete_2_9',
 ];
 

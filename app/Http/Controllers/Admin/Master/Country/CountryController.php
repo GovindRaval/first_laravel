@@ -152,10 +152,10 @@ class CountryController extends Controller
             $model->is_active  = $request->is_active;
             $this->updateSortingOrder($sortingNumber, $request->sorting);
             $model->is_default = 0;
-            if (isset($request->is_default) && $request->is_default)
-            {
-                $model->is_default = 1;
-            }
+            // if (isset($request->is_default) && $request->is_default)
+            // {
+            //     $model->is_default = 1;
+            // }
             /*
              * end of code for sorting
              */
