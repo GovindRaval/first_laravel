@@ -17,7 +17,7 @@
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-left">
                         <li class="breadcrumb-item"><a href="{{route('admin.home.index')}}">{{__('admin.home')}}</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('admin.master.country.index')}}">{{__('admin.video')}}</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('admin.video.index')}}">{{__('admin.video')}}</a></li>
                         <li class="breadcrumb-item active">{{__('admin.list')}}</li>
                     </ol>
                 </div>
@@ -49,9 +49,9 @@
                             <table data-model="AdminVideo" class="table sorting-table table-striped">
                                 <thead>
                                     <tr>
-                                        <th class="asc-desc text-center" id="@if($sortKey == 'sorting'){{$sortVal}} @endif">{{__('admin.index')}}<input @if($sortKey !='sorting' ) disabled="" @endif name="sorting" type="hidden" value="@if($sortKey == 'sorting'){{$sortVal}}@endif"></th>
-                                        <th class="asc-desc" id="@if($sortKey == 'video_name'){{$sortVal}} @endif">{{__('admin.video-name')}} <input @if($sortKey !='video_name' ) disabled="" @endif type="hidden" name="video_name" value="@if($sortKey == 'video_name'){{$sortVal}} @endif"></th>
-                                        <th class="asc-desc" id="@if($sortKey == 'video_url'){{$sortVal}} @endif">{{__('admin.video-url')}} <input @if($sortKey !='video_url' ) disabled="" @endif type="hidden" name="video_url" value="@if($sortKey == 'video_url'){{$sortVal}} @endif"></th>
+                                        <th class="asc-desc text-center" id="@if($sortKey == 'sorting'){{$sortVal}}@endif">{{__('admin.index')}}<input @if($sortKey !='sorting' ) disabled="" @endif name="sorting" type="hidden" value="@if($sortKey == 'sorting'){{$sortVal}}@endif"></th>
+                                        <th class="asc-desc" id="@if($sortKey == 'video_name'){{$sortVal}}@endif">{{__('admin.video-name')}} <input @if($sortKey !='video_name' ) disabled="" @endif type="hidden" name="video_name" value="@if($sortKey == 'video_name'){{$sortVal}}@endif"></th>
+                                        <th class="asc-desc" id="@if($sortKey == 'video_url'){{$sortVal}}@endif">{{__('admin.video-url')}} <input @if($sortKey !='video_url' ) disabled="" @endif type="hidden" name="video_url" value="@if($sortKey == 'video_url'){{$sortVal}}@endif"></th>
                                         <th class="asc-desc text-center" id="@if($sortKey == 'is_active'){{$sortVal}}@endif">{{__('admin.status')}}<input @if($sortKey !="is_active" ) disable="" @endif type="hidden" name="is_active" value="@if($sortKey == 'is_active'){{$sortVal}}@endif"></th>
                                         @canany([config('custom_middleware.edit_video'),config('custom_middleware.delete_video')])
                                         <th class="text-center">{{__('admin.action')}}</th>
@@ -60,12 +60,15 @@
                                 </thead>
                                 <tbody>
                                     @forelse($VideoList as $record)
+                                    {{-- <?php dd('$record')?> --}}
                                     @php
                                     $description = $record->GetVideoDescription();
+
                                     @endphp
                                     <tr id="{{$record->id}}">
                                         <td class="text-center">{{$record->sorting}}</td>
-                                        <td>{{ $description?ucfirst($description->video_name):''}}</td>
+                                        <td>{{ $description ?ucfirst($description->video_name):''}}</td>
+                                        {{-- <td>{{ $description?ucfirst($description->video_name):''}}</td> --}}
                                         <td>{{$description? $description->video_url:''}}</td>
                                         <td class="text-center">@if($record->is_active)
                                             <span class="{{config('custom.badge-success','badge bg-success')}}">{{__('admin.active')}}</span>
@@ -74,18 +77,18 @@
 
                                             @endif
                                         </td>
-                                        @canany([config('custom_middleware.edit_country'),config('custom_middleware.delete_country')])
+                                        @canany([config('custom_middleware.edit_video'),config('custom_middleware.delete_video')])
                                         <td class="text-center">
-                                            @can(config('custom_middleware.edit_country'))
-                                            <a href="#"><button type="button" class="{{config('custom.btn-primary','btn btn-outline-primary btn-sm')}}" title="{{__('admin.edit')}}"><i class="fas fa-edit"></i></button></a>
+                                            @can(config('custom_middleware.edit_video'))
+                                            <a href="{{route('admin.video.edit',['id'=>$record->id])}}"><button type="button" class="{{config('custom.btn-primary','btn btn-outline-primary btn-sm')}}" title="{{__('admin.edit')}}"><i class="fas fa-edit"></i></button></a>
                                             @if($record->is_active)
-                                            <a href="#"><button type="button" class="{{config('custom.btn-danger','btn btn-outline-danger btn-sm')}}" title="{{__('admin.click_in_active')}}"><i class="fas fa-times"></i></button></a>
+                                            <a href="{{route('admin.video.change-status',['id'=>$record->id,'active'=>0]).'?'.http_build_query($_GET)}}"><button type="button" class="{{config('custom.btn-danger','btn btn-outline-danger btn-sm')}}" title="{{__('admin.click_in_active')}}"><i class="fas fa-times"></i></button></a>
                                             @else
-                                            <a href="#"><button type="button" class="{{config('custom.btn-success','btn btn-outline-success btn-sm')}}" title="{{__('admin.click_active')}}"><i class="fas fa-check"></i></button></a>
+                                            <a href="{{route('admin.video.change-status',['id'=>$record->id,'active'=>1]).'?'.http_build_query($_GET)}}"><button type="button" class="{{config('custom.btn-success','btn btn-outline-success btn-sm')}}" title="{{__('admin.click_active')}}"><i class="fas fa-check"></i></button></a>
                                             @endif
                                             @endcan
                                             @can(config('custom_middleware.delete_country'))
-                                            <a><button type="button" class="{{config('custom.btn-danger','btn btn-outline-danger btn-sm')}}" title="{{__('admin.delete')}}"><i class="fas fa-trash"></i></button></a>
+                                            <a onclick="showSweetAlert('{{route('admin.video.delete',['id'=>$record->id])}}')"><button type="button" class="{{config('custom.btn-danger','btn btn-outline-danger btn-sm')}}" title="{{__('admin.delete')}}"><i class="fas fa-trash"></i></button></a>
                                             @endcan
                                         </td>
                                         @endcanany

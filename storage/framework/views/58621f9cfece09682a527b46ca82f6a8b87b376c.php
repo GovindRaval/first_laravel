@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page_title', trans('admin.country')); ?>
 <?php $__env->startSection('additional_css'); ?>
 <link rel="stylesheet" href="<?php echo e(asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')); ?>">

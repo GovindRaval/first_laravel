@@ -303,7 +303,7 @@ class CountryController extends Controller
                     return redirect()->back()->withInput($request->input)->withErrors([$countryName => Lang::get($this->langFile . '.error-country-unique-name')]);
                 }
             }
-
+dd($validationRule);
             $validatedData = $request->validate($validationRule, $validationMessage);
 
             DB::beginTransaction();
