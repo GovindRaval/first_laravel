@@ -5,6 +5,7 @@ namespace App\AdminModel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\AdminModel\City\AdminCity;
+use App\AdminModel\City\AdminCityDescription;
 
 class AdminCountry extends Model
 {
@@ -161,5 +162,10 @@ class AdminCountry extends Model
     {
         return AdminCity::where('country_id', $countryID)->where('is_active', 1)->orderBy('sorting', 'asc')->get();
     }
+    public function cityCount($id){
+        $cityname = AdminCity::where('country_id',$id)->pluck('id');
+        $getcitynamedata = AdminCityDescription::whereIn('city_id',$cityname)->groupBy('city_id')->pluck('city_name');
 
+        return $getcitynamedata;
+        }
 }

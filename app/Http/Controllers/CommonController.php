@@ -16,6 +16,7 @@ use App\AdminModel\Order\AdminOrderStatus;
 use App\AdminModel\GeneralSetting\HomeSlider\AdminHomeSlider;
 use App\AdminModel\Product\AdminProduct;
 use App\AdminModel\Size\AdminSize;
+use App\AdminModel\Video\AdminVideo;
 use App\Helpers\Helper;
 
 class CommonController extends Controller
@@ -44,42 +45,20 @@ class CommonController extends Controller
 
         $model = false;
 
-        if ($requestModel == 'AdminCategory')
-        {
-            $model = new AdminCategory();
-        }
-        else if ($requestModel == 'AdminCity')
+         if ($requestModel == 'AdminCity')
         {
             $model = new AdminCity();
-        }
-        else if ($requestModel == 'AdminColor')
-        {
-            $model = new AdminColor();
-        }
-        else if ($requestModel == 'AdminSize')
-        {
-            $model = new AdminSize();
         }
         else if ($requestModel == 'AdminCountry')
         {
             $model = new AdminCountry();
         }
-        else if ($requestModel == 'AdminOrderStatus')
+        else if ($requestModel == 'AdminVideo')
         {
-            $model = new AdminOrderStatus();
+            $model = new AdminVideo();
         }
-        else if ($requestModel == 'AdminHomeSlider')
-        {
-            $model = new AdminHomeSlider();
-        }
-        else if ($requestModel == 'HomeCategorySection')
-        {
-            $model = new HomeCategorySection();
-        }
-        else if ($requestModel == 'AdminProduct')
-        {
-            $model = new AdminProduct();
-        }
+       
+       
 
         if ($model)
         {

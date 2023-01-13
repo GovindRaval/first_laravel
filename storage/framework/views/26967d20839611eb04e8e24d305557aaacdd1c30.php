@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page_title', trans('admin.video')); ?>
 <?php $__env->startSection('additional_css'); ?>
 <link rel="stylesheet" href="<?php echo e(asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')); ?>">
@@ -16,7 +17,7 @@
                 <div class="col-sm-12">
                     <ol class="breadcrumb float-sm-left">
                         <li class="breadcrumb-item"><a href="<?php echo e(route('admin.home.index')); ?>"><?php echo e(__('admin.home')); ?></a></li>
-                        <li class="breadcrumb-item"><a href="<?php echo e(route('admin.master.country.index')); ?>"><?php echo e(__('admin.video')); ?></a></li>
+                        <li class="breadcrumb-item"><a href="<?php echo e(route('admin.video.index')); ?>"><?php echo e(__('admin.video')); ?></a></li>
                         <li class="breadcrumb-item active"><?php echo e(__('admin.list')); ?></li>
                     </ol>
                 </div>
@@ -48,9 +49,9 @@
                             <table data-model="AdminVideo" class="table sorting-table table-striped">
                                 <thead>
                                     <tr>
-                                        <th class="asc-desc text-center" id="<?php if($sortKey == 'sorting'): ?><?php echo e($sortVal); ?> <?php endif; ?>"><?php echo e(__('admin.index')); ?><input <?php if($sortKey !='sorting' ): ?> disabled="" <?php endif; ?> name="sorting" type="hidden" value="<?php if($sortKey == 'sorting'): ?><?php echo e($sortVal); ?><?php endif; ?>"></th>
-                                        <th class="asc-desc" id="<?php if($sortKey == 'video_name'): ?><?php echo e($sortVal); ?> <?php endif; ?>"><?php echo e(__('admin.video-name')); ?> <input <?php if($sortKey !='video_name' ): ?> disabled="" <?php endif; ?> type="hidden" name="video_name" value="<?php if($sortKey == 'video_name'): ?><?php echo e($sortVal); ?> <?php endif; ?>"></th>
-                                        <th class="asc-desc" id="<?php if($sortKey == 'video_url'): ?><?php echo e($sortVal); ?> <?php endif; ?>"><?php echo e(__('admin.video-url')); ?> <input <?php if($sortKey !='video_url' ): ?> disabled="" <?php endif; ?> type="hidden" name="video_url" value="<?php if($sortKey == 'video_url'): ?><?php echo e($sortVal); ?> <?php endif; ?>"></th>
+                                        <th class="asc-desc text-center" id="<?php if($sortKey == 'sorting'): ?><?php echo e($sortVal); ?><?php endif; ?>"><?php echo e(__('admin.index')); ?><input <?php if($sortKey !='sorting' ): ?> disabled="" <?php endif; ?> name="sorting" type="hidden" value="<?php if($sortKey == 'sorting'): ?><?php echo e($sortVal); ?><?php endif; ?>"></th>
+                                        <th class="asc-desc" id="<?php if($sortKey == 'video_name'): ?><?php echo e($sortVal); ?><?php endif; ?>"><?php echo e(__('admin.video-name')); ?> <input <?php if($sortKey !='video_name' ): ?> disabled="" <?php endif; ?> type="hidden" name="video_name" value="<?php if($sortKey == 'video_name'): ?><?php echo e($sortVal); ?><?php endif; ?>"></th>
+                                        <th class="asc-desc" id="<?php if($sortKey == 'video_url'): ?><?php echo e($sortVal); ?><?php endif; ?>"><?php echo e(__('admin.video-url')); ?> <input <?php if($sortKey !='video_url' ): ?> disabled="" <?php endif; ?> type="hidden" name="video_url" value="<?php if($sortKey == 'video_url'): ?><?php echo e($sortVal); ?><?php endif; ?>"></th>
                                         <th class="asc-desc text-center" id="<?php if($sortKey == 'is_active'): ?><?php echo e($sortVal); ?><?php endif; ?>"><?php echo e(__('admin.status')); ?><input <?php if($sortKey !="is_active" ): ?> disable="" <?php endif; ?> type="hidden" name="is_active" value="<?php if($sortKey == 'is_active'): ?><?php echo e($sortVal); ?><?php endif; ?>"></th>
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any([config('custom_middleware.edit_video'),config('custom_middleware.delete_video')])): ?>
                                         <th class="text-center"><?php echo e(__('admin.action')); ?></th>
@@ -59,12 +60,15 @@
                                 </thead>
                                 <tbody>
                                     <?php $__empty_1 = true; $__currentLoopData = $VideoList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $record): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                                    
                                     <?php
                                     $description = $record->GetVideoDescription();
+
                                     ?>
                                     <tr id="<?php echo e($record->id); ?>">
                                         <td class="text-center"><?php echo e($record->sorting); ?></td>
-                                        <td><?php echo e($description?ucfirst($description->video_name):''); ?></td>
+                                        <td><?php echo e($description ?ucfirst($description->video_name):''); ?></td>
+                                        
                                         <td><?php echo e($description? $description->video_url:''); ?></td>
                                         <td class="text-center"><?php if($record->is_active): ?>
                                             <span class="<?php echo e(config('custom.badge-success','badge bg-success')); ?>"><?php echo e(__('admin.active')); ?></span>
@@ -73,18 +77,18 @@
 
                                             <?php endif; ?>
                                         </td>
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any([config('custom_middleware.edit_country'),config('custom_middleware.delete_country')])): ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->any([config('custom_middleware.edit_video'),config('custom_middleware.delete_video')])): ?>
                                         <td class="text-center">
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check(config('custom_middleware.edit_country'))): ?>
-                                            <a href="#"><button type="button" class="<?php echo e(config('custom.btn-primary','btn btn-outline-primary btn-sm')); ?>" title="<?php echo e(__('admin.edit')); ?>"><i class="fas fa-edit"></i></button></a>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check(config('custom_middleware.edit_video'))): ?>
+                                            <a href="<?php echo e(route('admin.video.edit',['id'=>$record->id])); ?>"><button type="button" class="<?php echo e(config('custom.btn-primary','btn btn-outline-primary btn-sm')); ?>" title="<?php echo e(__('admin.edit')); ?>"><i class="fas fa-edit"></i></button></a>
                                             <?php if($record->is_active): ?>
-                                            <a href="#"><button type="button" class="<?php echo e(config('custom.btn-danger','btn btn-outline-danger btn-sm')); ?>" title="<?php echo e(__('admin.click_in_active')); ?>"><i class="fas fa-times"></i></button></a>
+                                            <a href="<?php echo e(route('admin.video.change-status',['id'=>$record->id,'active'=>0]).'?'.http_build_query($_GET)); ?>"><button type="button" class="<?php echo e(config('custom.btn-danger','btn btn-outline-danger btn-sm')); ?>" title="<?php echo e(__('admin.click_in_active')); ?>"><i class="fas fa-times"></i></button></a>
                                             <?php else: ?>
-                                            <a href="#"><button type="button" class="<?php echo e(config('custom.btn-success','btn btn-outline-success btn-sm')); ?>" title="<?php echo e(__('admin.click_active')); ?>"><i class="fas fa-check"></i></button></a>
+                                            <a href="<?php echo e(route('admin.video.change-status',['id'=>$record->id,'active'=>1]).'?'.http_build_query($_GET)); ?>"><button type="button" class="<?php echo e(config('custom.btn-success','btn btn-outline-success btn-sm')); ?>" title="<?php echo e(__('admin.click_active')); ?>"><i class="fas fa-check"></i></button></a>
                                             <?php endif; ?>
                                             <?php endif; ?>
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check(config('custom_middleware.delete_country'))): ?>
-                                            <a><button type="button" class="<?php echo e(config('custom.btn-danger','btn btn-outline-danger btn-sm')); ?>" title="<?php echo e(__('admin.delete')); ?>"><i class="fas fa-trash"></i></button></a>
+                                            <a onclick="showSweetAlert('<?php echo e(route('admin.video.delete',['id'=>$record->id])); ?>')"><button type="button" class="<?php echo e(config('custom.btn-danger','btn btn-outline-danger btn-sm')); ?>" title="<?php echo e(__('admin.delete')); ?>"><i class="fas fa-trash"></i></button></a>
                                             <?php endif; ?>
                                         </td>
                                         <?php endif; ?>

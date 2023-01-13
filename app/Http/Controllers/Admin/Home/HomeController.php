@@ -16,6 +16,9 @@ use App\AdminModel\AdminContactUs;
 use App\AdminModel\Product\Wishlist;
 use App\User;
 use App\Admin;
+use App\AdminModel\AdminCountry;
+use App\AdminModel\AdminCountryDescription;
+use App\AdminModel\City\AdminCity;
 use App\Helpers\Helper;
 use Illuminate\Support\Facades\Hash;
 
@@ -35,7 +38,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index');
+       $countrycount = AdminCountry::get()->count();
+       $getCountry = AdminCountry::get();
+       $citycounter = AdminCity::get()->count();
+    
+        return view('index',compact('countrycount','citycounter','getCountry'));
     }
 
     /*
