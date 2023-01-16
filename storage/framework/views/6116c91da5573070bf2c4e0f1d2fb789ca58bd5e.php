@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page_title', trans('admin.home')); ?>
 <?php $__env->startSection('additional_css'); ?>
 <link rel="stylesheet" href="<?php echo e(asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')); ?>">
@@ -73,9 +74,11 @@
                                             <?php
                                              $description    = $record->getCountryDescription();
                          $getcitydata = $record->cityCount($record->id);
+                        $citiesString =  $getcitydata->join(', ')
+                      
                                                ?>
                                             <td><?php echo e($description->country_name); ?></td>
-                                            <td class="text-center"><?php echo e($getcitydata); ?></td>
+                                            <td class="text-center"><?php echo e($citiesString); ?></td>
                                         </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                         <?php endif; ?>

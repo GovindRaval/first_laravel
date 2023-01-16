@@ -74,9 +74,11 @@
                                             <?php
                                              $description    = $record->getCountryDescription();
                          $getcitydata = $record->cityCount($record->id);
+                        $citiesString =  $getcitydata->join(', ')
+                      
                                                ?>
                                             <td>{{$description->country_name}}</td>
-                                            <td class="text-center">{{$getcitydata}}</td>
+                                            <td class="text-center">{{ $citiesString }}</td>
                                         </tr>
                                         @empty
                                         @endforelse

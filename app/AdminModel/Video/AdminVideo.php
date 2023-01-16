@@ -109,7 +109,7 @@ class AdminVideo extends Model
      public function searchbByName($searchText){
         return AdminVideoDescription::where('video_name','LIKE','%'.$searchText.'%')->pluck('video_id');
      }
-     public function GetVideoDescription($languageId="1",$getall= false){
+     public function GetVideoDescription($languageId="1 ",$getall= false){
 
         $query = $this->hasMany('App\AdminModel\Video\AdminVideoDescription', 'video_id', 'id');
 

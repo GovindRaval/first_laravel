@@ -166,6 +166,8 @@ class AdminCountry extends Model
         $cityname = AdminCity::where('country_id',$id)->pluck('id');
         $getcitynamedata = AdminCityDescription::whereIn('city_id',$cityname)->groupBy('city_id')->pluck('city_name');
 
+        // $getcitynamedata = AdminCountry::with('city')->where('country_id', $id)->get();
         return $getcitynamedata;
+
         }
 }

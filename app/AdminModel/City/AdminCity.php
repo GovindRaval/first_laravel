@@ -169,5 +169,4 @@ class AdminCity extends Model
     {
         return $this->hasOne(AdminCountry::class, 'id', 'country_id')->first();
     }
-
 }

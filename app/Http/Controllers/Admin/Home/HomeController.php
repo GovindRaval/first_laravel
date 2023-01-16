@@ -41,7 +41,6 @@ class HomeController extends Controller
        $countrycount = AdminCountry::get()->count();
        $getCountry = AdminCountry::get();
        $citycounter = AdminCity::get()->count();
-    
         return view('index',compact('countrycount','citycounter','getCountry'));
     }
 
