@@ -19,6 +19,7 @@ use App\Admin;
 use App\AdminModel\AdminCountry;
 use App\AdminModel\AdminCountryDescription;
 use App\AdminModel\City\AdminCity;
+use App\AdminModel\Video\AdminVideo;
 use App\Helpers\Helper;
 use Illuminate\Support\Facades\Hash;
 
@@ -36,12 +37,20 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      */
-    public function index()
-    {
+    public function index(Request $request)
+    {    $countryData                 = new AdminCountry();
+       $cityData                 = new AdminCity();
+       $videoData = new AdminVideo();
        $countrycount = AdminCountry::get()->count();
        $getCountry = AdminCountry::get();
        $citycounter = AdminCity::get()->count();
-        return view('index',compact('countrycount','citycounter','getCountry'));
+       $fromDate         = $request->fromDate ? $request->fromDate : '';
+       $toDate           = $request->toDate ? $request->toDate : '';
+       $countryTotal        = $countryData->getfromToDateCountry($fromDate, $toDate);
+       $cityTotal        =  $countryData->getfromToDateCity($fromDate, $toDate);
+       $videoTotal = $videoData->getvideocountfromtoDate($fromDate, $toDate);
+  
+        return view('index',compact('countrycount','citycounter','getCountry','fromDate', 'toDate','countryTotal','cityTotal','videoTotal'));
     }
 
     /*
