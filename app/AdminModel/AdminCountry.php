@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\AdminModel\City\AdminCity;
 use App\AdminModel\City\AdminCityDescription;
-
+use Illuminate\Support\Facades\DB;
 class AdminCountry extends Model
 {
 
@@ -170,4 +170,50 @@ class AdminCountry extends Model
         return $getcitynamedata;
 
         }
+        public function getfromToDateCountry($fromDate, $toDate)
+            {
+                if ($fromDate && $toDate)
+                {
+                    $fromDateFormate  = date_create_from_format('m-d-Y', $fromDate);
+                    $toDateFormate    = date_create_from_format('m-d-Y', $toDate);
+                    $formatedFromDate = date_format($fromDateFormate, 'Y-m-d');
+                    $formateToDate    = date_format($toDateFormate, 'Y-m-d');
+                    $user             = DB::table('admin_country')
+                            ->select('*')
+                            ->whereBetween('created_at', [$formatedFromDate, $formateToDate])
+                            ->get();
+        //            $user = $user->whereBetween('created_at', [$formatedFromDate, $formateToDate])->where('fcm_token', '!=', NULL)->pluck('fcm_token');
+                    return $user->count();
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        public function getfromToDateCity($fromDate, $toDate)
+            {
+                if ($fromDate && $toDate)
+                {
+                    $fromDateFormate  = date_create_from_format('m-d-Y', $fromDate);
+                    $toDateFormate    = date_create_from_format('m-d-Y', $toDate);
+                    $formatedFromDate = date_format($fromDateFormate, 'Y-m-d');
+                    $formateToDate    = date_format($toDateFormate, 'Y-m-d');
+                    // dd($formatedFromDate, $formateToDate);
+                    $user             = DB::table('admin_country')
+                            ->select('*')
+                            ->whereBetween('created_at', [$formatedFromDate, $formateToDate])
+                            ->pluck('id');
+                            // dd($user);
+                            $filterCity = AdminCity::whereIn('country_id',$user);
+               
+        //            $user = $user->whereBetween('created_at', [$formatedFromDate, $formateToDate])->where('fcm_token', '!=', NULL)->pluck('fcm_token');
+                    return $filterCity->count();
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+           
+      
 }

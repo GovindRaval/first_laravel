@@ -4,6 +4,7 @@ namespace App\AdminModel\Video;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 class AdminVideo extends Model
 {
     use SoftDeletes;
@@ -118,5 +119,25 @@ class AdminVideo extends Model
         }
         return $getall?$query->get():$query->first();
 
+     }
+     public static function getvideocountfromtoDate($fromDate,$toDate){
+        if ($fromDate && $toDate)
+        {
+            $fromDateFormate  = date_create_from_format('m-d-Y', $fromDate);
+            $toDateFormate    = date_create_from_format('m-d-Y', $toDate);
+            $formatedFromDate = date_format($fromDateFormate, 'Y-m-d');
+            $formateToDate    = date_format($toDateFormate, 'Y-m-d');
+            $user             = DB::table('admin_video')
+                    ->select('*')
+                    ->whereBetween('created_at', [$formatedFromDate, $formateToDate])
+                    ->get();
+                    // dd($user);
+//            $user = $user->whereBetween('created_at', [$formatedFromDate, $formateToDate])->where('fcm_token', '!=', NULL)->pluck('fcm_token');
+            return $user->count();
+        }
+        else
+        {
+            return 0;
+        }
      }
 }

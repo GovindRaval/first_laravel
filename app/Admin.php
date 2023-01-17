@@ -121,4 +121,28 @@ class Admin extends Authenticatable
         return Admin::with('roles')->orderBy('updated_at', 'asc')->paginate(config('custom.per_page'));
     }
 
+    public static function hello(){
+        dd(111);
+    }
+//     public function getfromToDateCountry($id,$fromDate, $toDate)
+//     {
+//         if ($fromDate && $toDate)
+//         {
+//             $fromDateFormate  = date_create_from_format('m-d-Y', $fromDate);
+//             $toDateFormate    = date_create_from_format('m-d-Y', $toDate);
+//             $formatedFromDate = date_format($fromDateFormate, 'Y-m-d');
+//             $formateToDate    = date_format($toDateFormate, 'Y-m-d');
+//             $user             = DB::table('admin_country')
+//                     ->select('*')
+//                     ->whereBetween('created_at', [$formatedFromDate, $formateToDate])
+//                     ->get();
+// //            $user = $user->whereBetween('created_at', [$formatedFromDate, $formateToDate])->where('fcm_token', '!=', NULL)->pluck('fcm_token');
+//             return $user->count();
+//         }
+//         else
+//         {
+//             return 0;
+//         }
+//     }
+
 }
