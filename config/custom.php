@@ -62,5 +62,16 @@ return [
     'app_logo_height'      => 360,
     'favicon_width'        => 16,
     'favicon_height'       => 16,
+
+    /*
+     * Setting
+     */
+'camp_status_active'            => [
+    'active'   => 'Active',
+    'inactive' => 'InActive',
+    'all'      => 'All'
+],
+
 ];
 
+ 
