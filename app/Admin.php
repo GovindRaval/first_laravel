@@ -121,9 +121,7 @@ class Admin extends Authenticatable
         return Admin::with('roles')->orderBy('updated_at', 'asc')->paginate(config('custom.per_page'));
     }
 
-    public static function hello(){
-        dd(111);
-    }
+    
 //     public function getfromToDateCountry($id,$fromDate, $toDate)
 //     {
 //         if ($fromDate && $toDate)

@@ -294,6 +294,8 @@ return [
     'startdate'                               => 'Start Date',
     'enddate'                               => 'End Date',
     'user_created_date'                     => 'Created Between',
+    'start_date'                            => 'Start Date',
+    'end_date'                            => 'End Date',
 
    
 ];

@@ -170,6 +170,51 @@ class AdminCountry extends Model
         return $getcitynamedata;
 
         }
+
+    public function cityCountData($id, $filterCampStatus, $fromDateFilter = '', $toDateFilter = ''){
+  
+        // dd($fromDateFilter,$toDateFilter);
+        if (($fromDateFilter && $toDateFilter) || $filterCampStatus)
+        { 
+            $countryname = AdminCountry::where('id',$id);
+            // dd($countryname->get());
+
+            if ($filterCampStatus && $filterCampStatus != "all")
+            {
+                $status = 0;
+                if ($filterCampStatus == 'active')
+                {
+                    $status = 1;
+                }
+                $countryname = $countryname->where('is_active', $status);      
+         
+            }
+            $getcountryres = $countryname->pluck('id')->toArray();
+            $cityname = AdminCity::where('country_id',$getcountryres)->get();
+            if ($fromDateFilter && $toDateFilter)
+            {
+                $fromDateFormate  = date_create_from_format('m-d-Y', $fromDateFilter);
+                $toDateFormate    = date_create_from_format('m-d-Y', $toDateFilter);
+                $formatedFromDate = date_format($fromDateFormate, 'Y-m-d');
+                $formateToDate    = date_format($toDateFormate, 'Y-m-d');
+                $getcountryres           = $countryname->whereBetween('created_at', [$formatedFromDate, $formateToDate])->pluck('id')->toArray();
+        //   dd( $cityname );
+        $cityname = AdminCity::where('country_id',$getcountryres)->get();
+            }
+        //   dd($cityname );
+            return$cityname->count();
+        }
+        else
+        {
+            return 0;
+        }
+
+
+    
+        $getcitynamedata1 = AdminCityDescription::whereIn('city_id',$cityname)->groupBy('city_id')->pluck('city_name');
+        return $getcitynamedata1->count();
+
+        }
         public function getfromToDateCountry($fromDate, $toDate)
             {
                 if ($fromDate && $toDate)
@@ -215,5 +260,34 @@ class AdminCountry extends Model
                 }
             }
            
-      
+            public function getDownloadCountByAdmin($id, $filterCampStatus, $fromDateFilter = '', $toDateFilter = '')
+    {
+        if (($fromDateFilter && $toDateFilter) || $filterCampStatus)
+        { 
+            $user = AdminCity::where('country_id', $id)->get();
+
+            if ($filterCampStatus && $filterCampStatus != "all")
+            {
+                $status = 0;
+                if ($filterCampStatus == 'active')
+                {
+                    $status = 1;
+                }
+                $user = $user->where('is_active', $status);        
+            }
+            if ($fromDateFilter && $toDateFilter)
+            {
+                $fromDateFormate  = date_create_from_format('m-d-Y', $fromDateFilter);
+                $toDateFormate    = date_create_from_format('m-d-Y', $toDateFilter);
+                $formatedFromDate = date_format($fromDateFormate, 'Y-m-d');
+                $formateToDate    = date_format($toDateFormate, 'Y-m-d');
+                $user             = $user->whereBetween('created_at', [$formatedFromDate, $formateToDate]);
+            }
+            return $user;
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }

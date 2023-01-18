@@ -49,8 +49,12 @@ class HomeController extends Controller
        $countryTotal        = $countryData->getfromToDateCountry($fromDate, $toDate);
        $cityTotal        =  $countryData->getfromToDateCity($fromDate, $toDate);
        $videoTotal = $videoData->getvideocountfromtoDate($fromDate, $toDate);
-  
-        return view('index',compact('countrycount','citycounter','getCountry','fromDate', 'toDate','countryTotal','cityTotal','videoTotal'));
+       $campStatus    = config('custom.camp_status_active');
+       $filterCampStatus = $request->camp_status ? $request->camp_status : '';
+       $fromDateFilter = $request->created_at ? $request->created_at : '';
+       $toDateFilter   = $request->to_date ? $request->to_date : '';
+
+        return view('index',compact('countrycount','citycounter','getCountry','fromDate', 'toDate','countryTotal','cityTotal','videoTotal','campStatus', 'filterCampStatus','fromDateFilter', 'toDateFilter'));
     }
 
     /*
